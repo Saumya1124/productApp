@@ -1,35 +1,45 @@
+import './ProductDetails.css';
+
 const ProductDetails = (props)=> {
 
-
-   
     return(
-        <div>
-          
-        
-          
-                {props.category === 'Electric' &&
-                    
-                    <div id = {props.id}>
-                        <h3>{props.name}, {props.price} </h3>
-                        <button onClick={props.delItem} id = {props.id}>Delete</button>
-                    </div>
-                    
-                    
-                }
-          
-          
+        <div className="products">
+
+            <div>
+                <h3>Electric Items</h3>
+                {props.details.map((detail)=>{
+                    return detail.category === 'Electric' && 
+                            <div className='data'>
+                                <h4>{detail.name} -- {detail.price} </h4>
+                                <div className='btn1'>
+                                     <button onClick={props.delItem} id = {detail.id}>Delete</button>
+                                </div>                               
+                            </div>            
+                })}
+            </div>
+
             
+            <div>
+                <h3>Fashion Items</h3>
+                {props.details.map((detail)=>{
+                    return detail.category === 'Fashion' && 
+                            <div>
+                                <h4>{detail.name} -- {detail.price} </h4>
+                                <button onClick={props.delItem} id = {detail.id}>Delete</button>
+                            </div>              
+                })}
+            </div>
 
-           {props.category === 'Fashion' &&
-               
-               <h3>{props.name}, {props.price}</h3>
-           } 
-
-           {props.category === 'SkinCare' &&
-               
-               <h3>{props.name}, {props.price}</h3>
-           } 
-
+            <div>
+                <h3>SkinCare Items</h3>
+                {props.details.map((detail)=>{
+                    return detail.category === 'SkinCare' && 
+                    <div>
+                        <h4>{detail.name} -- {detail.price} </h4>
+                        <button onClick={props.delItem} id = {detail.id}>Delete</button>
+                    </div>                                     
+                })}
+            </div>
 
               
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Fragment } from "react";
 import ProductDetails from "./ProductDetails";
+import './ProductForm.css';
 const ProductForm = ()=> {
 
     const [id , setId] = useState('')
@@ -27,14 +28,24 @@ const ProductForm = ()=> {
         setDetails([{id : id , name : name , category : category , price : price}, ...details])
         console.log(details)
         localStorage.setItem(id,[name , category , price])
+
+        setId('');
+        setName('');
+        setCategory('');
+        setPrice('');
     }
     
     const delItem = (event)=> {
         event.preventDefault()
         const data = event.target.id
-        console.log(id)
+        console.log(data)
+
+        setDetails(()=> {
+            return details.filter(detail => detail.id != data )
+        })
+        console.log('called')
         
-        localStorage.removeItem(id)
+        localStorage.removeItem(data)
 
     }
     
@@ -43,44 +54,40 @@ const ProductForm = ()=> {
     
     return (
         <div>
+            <div className="form">
             <form onSubmit={submitFormHandler}>
                 <div>
                       <label>Product ID</label>
-                      <input type="text" onChange={updateId}></input>
+                      <input type="text" onChange={updateId} value={id}></input>
                 </div>
                 <div>
                       <label>Product Name</label>
-                      <input type="text" onChange={updateName}></input>
+                      <input type="text" onChange={updateName} value={name}></input>
                 </div>
                 <div>
                       <label>Choose a category</label>
-                      <input type="text" onChange={updateCategory}></input>
+                      <select onChange={updateCategory} value={category}>
+                        <option value='Electric'>Electric</option>
+                        <option value='Fashion'>Fashion</option>
+                        <option value='SkinCare'>Skin Care</option>
+                      </select>
                 </div>
                 <div>
                       <label>Selling Price</label>
-                      <input type="text" onChange={updatePrice}></input>
+                      <input type="text" onChange={updatePrice} value={price}></input>
                 </div>
-                <button>Add Product</button>
+                <div className="btn">
+                    <button>Add Product</button>
+                </div>
+                
             </form>
 
-           
-
-            {details.map((detail) => 
-              <ProductDetails 
-                 key = {detail.id}
-                 name = {detail.name}
-                 category = {detail.category}
-                 price = {detail.price}
-                 delItem = {delItem}
-              />
-
-            )}
+            </div>
 
            
 
-
-    
-            
+            <ProductDetails details = {details} delItem = {delItem}></ProductDetails>
+          
         </div>
 
     )
